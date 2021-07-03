@@ -48,7 +48,7 @@ public class produkt {
             bes = null;
         }
     }
-s
+
 
     private static class WrongTypeException extends Exception{
         String art_f;
