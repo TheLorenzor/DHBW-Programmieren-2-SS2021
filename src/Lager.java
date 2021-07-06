@@ -7,7 +7,7 @@ public class Lager {
     }
     public int move_palette(short[] from,short[] to){
         try {
-            if (from[0]<0||from[0]>1||from[1]<0||from[1]>4||from[2]<0||from[2]>1) {
+            if (from[0]<0||from[0]>1||from[1]<0||from[1]>4||from[2]<0||from[2]>1) { //if it is out of bounce
                 throw new ArrayIndexOutOfBoundsException();
             }
             if (to[0]<0||to[0]>1||to[1]<0||to[1]>4||to[2]<0||to[2]>1) {
