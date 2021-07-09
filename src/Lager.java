@@ -60,6 +60,18 @@ public class Lager {
 
 
     }
+    public boolean auslagern(short[] punkt) {
+        if (punkt[0]>1||punkt[0]<0||punkt[1]>4||punkt[1]<0||punkt[2]>1||punkt[2]<0) {
+            return false;
+        }
+        if (lager[punkt[0]][punkt[1]][punkt[2]].getEigen()==produkttyp.Balken) {
+            lager[punkt[0]][punkt[1]][0] =null;
+            lager[punkt[0]][punkt[1]][1] =null;
+        } else {
+            lager[punkt[0]][punkt[1]][punkt[2]]=null;
+        }
+        return true;
+    }
     public produkt[][][] getLager() {
         return lager;
     }
