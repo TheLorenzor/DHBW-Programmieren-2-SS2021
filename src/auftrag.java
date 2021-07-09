@@ -14,15 +14,16 @@ public class auftrag {
     private static int nr;
 
     public auftrag(){
-        String path_to_csv ="../Assets/";
-        String data[];
+        String path_to_csv = "D:\\Persönlich\\Duales Studium\\Studium\\SS1\\Programmieren 2\\Klausren\\src\\Leistungsnachweis.csv";
+        String[] data={};
         try {
             BufferedReader csvread = new BufferedReader(new FileReader(path_to_csv));
             int i=0;
             do {
+                data = null;
                 if (nr==0){
                     csvread.readLine();
-                    nr = 1;
+                    nr=2;
                 } else {
                     String row= csvread.readLine();
                     if (row ==null) {
@@ -32,17 +33,67 @@ public class auftrag {
                         data = row.split(";");
                     }
                 }
+
             } while(i<nr);
+            ++nr;
             csvread.close();
         } catch (FileNotFoundException fe) {
             System.out.println("file nicht gefunden, bitte neues eingeben");
         } catch (IOException io) {
             System.out.println("Eingabefehler");
         }
-        if (data!=null){
+        if (data.length!=0){
             id = Integer.parseInt(data[0]);
             in_out= data[1].equals("Einlagerung");
-            if
+            reward = Integer.parseInt(data[5]);
+            if(data[2].equals("Holz")) {
+                type = produkttyp.Holz;
+            }else if(data[2].equals("Papier")){
+                type = produkttyp.Papier;
+            }else {
+                type = produkttyp.Stein;
+            }
+            switch (data[3]) {
+                case "Wei�" -> eig = produkttyp.Weis;
+                case "Grün" -> eig = produkttyp.Gruen;
+                case "Blau" -> eig = produkttyp.Blau;
+                case "Kiefer" -> eig = produkttyp.Kiefer;
+                case "Buche" -> eig = produkttyp.Buche;
+                case "Eiche" -> eig = produkttyp.Eiche;
+                case "Marmor" -> eig = produkttyp.Marmor;
+                case "Granit" -> eig = produkttyp.Granit;
+                case "Sandstein" -> eig = produkttyp.Sandstein;
+            }
+            switch (data[4]) {
+                case "A3" -> eig2 = produkttyp.A3;
+                case "A4" -> eig2 = produkttyp.A4;
+                case "A5" -> eig2 = produkttyp.A5;
+                case "Bretter" -> eig2 = produkttyp.Bretter;
+                case "Balken" -> eig2 = produkttyp.Balken;
+                case "Scheit" -> eig2 = produkttyp.Scheit;
+                case "Leicht" -> eig2 = produkttyp.leicht;
+                case "Mittel" -> eig2 = produkttyp.mittel;
+                case "Schwer" -> eig2 = produkttyp.schwer;
+            }
+
         }
     }
+
+    public produkttyp[] getEigenschaften() {
+        return new produkttyp[]{type,eig,eig2};
+    }
+    public int get_einlag(){
+        if (in_out) {
+            return 1;
+        } else {
+            return -1;
+        }
+    }
+    public int getReward(){
+        return reward;
+    }
+    public int getId(){
+        return id;
+    }
+
 }
