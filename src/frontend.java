@@ -7,7 +7,11 @@ public class frontend extends JFrame {
         super();
         this.setTitle("Logistikspiel");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+        GridLayout store = new GridLayout(2,5,5,5);
         this.setVisible(true);
+
+
 
 
     }
