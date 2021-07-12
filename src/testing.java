@@ -10,5 +10,7 @@ public class testing {
         lager.einlagern(punkt,balken);
         System.out.println("#################################");
         lager.lager_ausgeben();
+        lager.auslagern(punkt);
+        lager.lager_ausgeben();
     }
 }
