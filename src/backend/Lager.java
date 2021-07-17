@@ -1,3 +1,5 @@
+package backend;
+
 import java.lang.Math;
 public class Lager {
     private produkt[][][] lager;

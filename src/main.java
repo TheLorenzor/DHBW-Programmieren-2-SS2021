@@ -1,8 +1,6 @@
-import javax.swing.*;
-
+import frontend.*;
 public class main {
-    public static void main(String [] args) {
-        //public void run
-        JFrame t = new frontend();
+    public static void main(String []args){
+        GUI frame = new GUI();
     }
 }

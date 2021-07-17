@@ -1,3 +1,7 @@
+import backend.Lager;
+import backend.produkt;
+import backend.produkttyp;
+
 public class testing {
     public static void main(String[] args){
         Lager lager = new Lager();

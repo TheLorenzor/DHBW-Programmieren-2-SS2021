@@ -1,3 +1,5 @@
+package backend;
+
 public class produkt {
     private produkttyp type;
     private produkttyp art;
