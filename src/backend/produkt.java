@@ -1,10 +1,25 @@
 package backend;
 
+import java.net.URL;
+
 public class produkt {
     private produkttyp type;
     private produkttyp art;
     private produkttyp bes;
+    private URL path;
+
     public produkt(produkttyp typ,produkttyp e1,produkttyp e2){
+       if (typ==null) {
+           type = null;
+           art = null;
+           bes = null;
+           path = getClass().getResource("leer.png");
+
+       } else {
+           set_produkt(typ,e1,e2);
+       }
+    }
+    public void set_produkt(produkttyp typ,produkttyp e1,produkttyp e2) {
         try {
             switch (typ) {
                 case Papier:
@@ -15,6 +30,7 @@ public class produkt {
                     } else {
                         art = e1;
                         bes = e2;
+                        path = getClass().getResource("Papier/"+art.toString()+"_"+bes.toString()+".png");
                     }
                     type = produkttyp.Papier;
                     break;
@@ -26,6 +42,7 @@ public class produkt {
                     } else {
                         art = e1;
                         bes = e2;
+                        path = getClass().getResource("Papier/"+art.toString()+"_"+bes.toString()+".png");
                     }
                     type = produkttyp.Holz;
                     break;
@@ -37,6 +54,7 @@ public class produkt {
                     } else {
                         art = e1;
                         bes = e2;
+                        path = getClass().getResource("Papier/"+art.toString()+"_"+bes.toString()+".png");
                     }
                     type = produkttyp.Stein;
                     break;
@@ -44,13 +62,12 @@ public class produkt {
                     throw new WrongTypeException("Eigenschaft");
             }
         } catch (WrongTypeException wt) {
-            System.out.println("Die Definition des Produktes hatte die falsche "+wt.art_f);
+            System.err.println("Die Definition des Produktes hatte die falsche "+wt.art_f);
             art = null;
             type = null;
             bes = null;
         }
     }
-
 
     private static class WrongTypeException extends Exception{
         String art_f;
@@ -60,7 +77,9 @@ public class produkt {
         }
     }
 
-
+    public URL getPath() {
+        return path;
+    }
     public produkttyp getArt() {
         return art;
     }

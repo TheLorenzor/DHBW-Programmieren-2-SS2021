@@ -4,7 +4,8 @@ import java.net.URL;
 import java.util.Objects;
 
 public class GUI extends JFrame {
-    JLabel[] auftrage;
+    JPanel auftrag_menu;
+    JPanel menu;
     regal main;
     ImageIcon background;
     Dimension full_frame = new Dimension(1400,900);
@@ -16,6 +17,16 @@ public class GUI extends JFrame {
         JLabel backgdrop = new JLabel(background);
         this.setContentPane(backgdrop);
 
+        auftrag_menu = new JPanel();
+        auftrag_menu.setBackground(Color.RED);
+        auftrag_menu.setSize(400,500);
+        auftrag_menu.setLocation(13,330);
+
+        menu = new JPanel();
+        menu.setSize(150,800);
+        menu.setLocation(1165,28);
+        this.add(menu);
+        this.add(auftrag_menu);
         this.add(main);
         this.pack();
         this.setSize(full_frame);
