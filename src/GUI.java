@@ -5,20 +5,22 @@ import java.util.Objects;
 
 public class GUI extends JFrame {
     JLabel[] auftrage;
-    JPanel main;
+    regal main;
     ImageIcon background;
-    Dimension full_frame = new Dimension(1000,700);
-    public GUI(URL url) {
+    Dimension full_frame = new Dimension(1400,900);
+    public GUI() {
         super("Lagersimulation");
-
-        background = createImageIcon("Background.jpg");
-        background.setImage(background.getImage().getScaledInstance(1000,700,Image.SCALE_DEFAULT));
+        main = new regal();
+        background = createImageIcon("Background.png");
+        background.setImage(background.getImage().getScaledInstance(1400,900,Image.SCALE_DEFAULT));
         JLabel backgdrop = new JLabel(background);
         this.setContentPane(backgdrop);
 
+        this.add(main);
         this.pack();
         this.setSize(full_frame);
         this.setResizable(false);
+        this.setLayout(null);
         this.setDefaultCloseOperation(3);
         this.setVisible(true);
     }
