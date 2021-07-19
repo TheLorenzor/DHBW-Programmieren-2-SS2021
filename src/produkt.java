@@ -1,28 +1,41 @@
-package backend;
-
+import javax.swing.*;
+import java.awt.*;
 import java.net.URL;
 
-public class produkt {
+public class produkt extends JLabel{
     private produkttyp type;
     private produkttyp art;
     private produkttyp bes;
     private URL path;
+    public int id;
 
-    public produkt(produkttyp typ,produkttyp e1,produkttyp e2){
-       if (typ==null) {
-           type = null;
-           art = null;
-           bes = null;
-           path = getClass().getResource("leer.png");
-
-       } else {
-           set_produkt(typ,e1,e2);
-       }
+    public produkt(int i ) {
+        super();
+        id = i;
+        type = null;
+        art = null;
+        bes = null;
+        path = getClass().getResource("leer.png");
+        ImageIcon pic = new ImageIcon(path);
+        pic.setImage(pic.getImage().getScaledInstance(183,140, Image.SCALE_DEFAULT));
+        this.setIcon(pic);
     }
-    public void set_produkt(produkttyp typ,produkttyp e1,produkttyp e2) {
+
+    @Override
+    public String toString() {
+        return "produkt{" +
+                "type=" + type +
+                ", art=" + art +
+                ", bes=" + bes +
+                ", path=" + path +
+                ", id=" + id +
+                '}';
+    }
+
+    public void set_produkt(produkttyp typ, produkttyp e1, produkttyp e2) {
         try {
             switch (typ) {
-                case Papier:
+                case Papier: //if it is paper it checks whether it has the right properties
                     if (e1 != produkttyp.Gruen && e1!= produkttyp.Weis && e1!= produkttyp.Blau) {
                         throw new WrongTypeException("Farbe");
                     } else if ( e2!=produkttyp.A3 && e2!=produkttyp.A4 && e2!=produkttyp.A5) {
@@ -42,7 +55,7 @@ public class produkt {
                     } else {
                         art = e1;
                         bes = e2;
-                        path = getClass().getResource("Papier/"+art.toString()+"_"+bes.toString()+".png");
+                        path = getClass().getResource("Holz/"+art.toString()+"_"+bes.toString()+".png");
                     }
                     type = produkttyp.Holz;
                     break;
@@ -54,13 +67,16 @@ public class produkt {
                     } else {
                         art = e1;
                         bes = e2;
-                        path = getClass().getResource("Papier/"+art.toString()+"_"+bes.toString()+".png");
+                        path = getClass().getResource("Stein/"+art.toString()+"_"+bes.toString()+".png");
                     }
                     type = produkttyp.Stein;
                     break;
                 default:
                     throw new WrongTypeException("Eigenschaft");
             }
+            ImageIcon type = new ImageIcon(path);
+            type.setImage(type.getImage().getScaledInstance(193,140, Image.SCALE_DEFAULT));
+            this.setIcon(type);
         } catch (WrongTypeException wt) {
             System.err.println("Die Definition des Produktes hatte die falsche "+wt.art_f);
             art = null;
