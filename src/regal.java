@@ -19,7 +19,7 @@ public class regal extends JPanel {
         int i =0;
         MouseListener listener = new DragMouseAdapter();
         for (produkt label:paletten){
-            label = new produkt(i);
+            label = new produkt(true);
             paletten[i]=label;
             int x;
             if (i<5) {
@@ -36,8 +36,7 @@ public class regal extends JPanel {
         }
 
         //Teststuff
-        produkt test2 =new produkt(6);
-        test2.set_produkt(produkttyp.Stein,produkttyp.Granit,produkttyp.leicht);
+        produkt test2 =new produkt(produkttyp.Stein,produkttyp.Granit,produkttyp.leicht);
         test2.setBounds(paletten[6].getBounds());
         this.remove(paletten[6]);
         this.validate();
@@ -114,14 +113,12 @@ public class regal extends JPanel {
                 } else if (to_update[j][i][1]!=null) {
 
                 }else {
-                    to_update[j][i][0] = new produkt(7);
+                    to_update[j][i][0] = new produkt(true);
                     paletten[numb] =to_update[j][i][0];
-                    ImageIcon t =new ImageIcon(paletten[numb].getPath());
-                    t.setImage(t.getImage().getScaledInstance(183,140,1));
-                    paletten[numb].setIcon(t);
                     paletten[numb].setBounds(rec);
                     paletten[numb].addMouseListener(listen);
                     paletten[numb].setTransferHandler(new TransHandler(this,lager));
+                    this.add(paletten[numb]);
                 }
 
             }

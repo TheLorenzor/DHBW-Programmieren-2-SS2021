@@ -7,20 +7,27 @@ public class produkt extends JLabel{
     private produkttyp art;
     private produkttyp bes;
     private URL path;
-    public int id;
+    public long id;
+    private static long pal_id;
 
-    public produkt(int i ) {
+    public produkt(produkttyp typ,produkttyp e1, produkttyp e2) {
         super();
-        id = i;
-        type = null;
-        art = null;
-        bes = null;
-        path = getClass().getResource("leer.png");
-        ImageIcon pic = new ImageIcon(path);
-        pic.setImage(pic.getImage().getScaledInstance(183,140, Image.SCALE_DEFAULT));
-        this.setIcon(pic);
+        id = pal_id;
+        ++pal_id;
+        set_produkt(typ,e1,e2);
     }
-
+    public  produkt(boolean nul) {
+        if (nul) {
+            id = -1;
+            type=null;
+            art = null;
+            bes = null;
+            path = getClass().getResource("leer.png");
+            ImageIcon type = new ImageIcon(path);
+            type.setImage(type.getImage().getScaledInstance(193,140, Image.SCALE_DEFAULT));
+            this.setIcon(type);
+        }
+    }
     @Override
     public String toString() {
         return "produkt{" +
