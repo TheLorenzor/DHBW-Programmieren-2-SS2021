@@ -1,5 +1,3 @@
-package backend;
-
 public enum produkttyp {
     Papier,
     Weis{

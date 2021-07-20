@@ -1,5 +1,3 @@
-package backend;
-
 import java.lang.Math;
 public class Lager {
     private produkt[][][] lager;
@@ -32,6 +30,11 @@ public class Lager {
             } else {
                 if (check_movement(to_move,to,from)) {
                     lager[to[0]][to[1]][to[2]] = to_move;
+                    if(to[2]==1){
+                        lager[to[0]][to[1]][to[2]].change_size(true);
+                    } else  {
+                        lager[to[0]][to[1]][to[2]].change_size(false);
+                    }
                     lager[from[0]][from[1]][from[2]] = null;
                     return 0;
                 }
@@ -53,7 +56,7 @@ public class Lager {
                 lager[punkt[0]][punkt[1]][0] =typ;
                 lager[punkt[0]][punkt[1]][1] =typ;
             } else {
-                lager[punkt[0]][punkt[1]][punkt[2]] = typ;
+                lager[punkt[0]][punkt[1]][0] = typ;
             }
             return true;
         } else {
