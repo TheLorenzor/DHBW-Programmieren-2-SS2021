@@ -1,0 +1,7 @@
+https://zetcode.com/javaswing/draganddrop/
+https://www.programmersought.com/article/39541200931/
+
+
+
+https://docs.oracle.com/javase/tutorial/uiswing/dnd/intro.html
+http://www.java2s.com/Tutorials/Java/Java_Swing/1550__Java_Swing_Drag_Drop.html

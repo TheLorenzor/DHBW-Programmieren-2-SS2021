@@ -50,7 +50,7 @@ public class Lager {
         return 0;
     }
 
-    public boolean einlagern(short[] punkt,produkt typ){
+    public boolean einlagern(short[] punkt, produkt typ){
         if(check_movement(typ,punkt,punkt)){
             if (typ.getEigen()==produkttyp.Balken) {
                 lager[punkt[0]][punkt[1]][0] =typ;
@@ -80,22 +80,13 @@ public class Lager {
     public produkt[][][] getLager() {
         return lager;
     }
-
-    private boolean check_movement(produkt t,short[] to,short[] from){
+    /*
+    * [0,0,0] ist in der unteren forderen linken Ecke des Regals
+    * */
+    private boolean check_movement(produkt t, short[] to, short[] from){
         if(t.getArt()==produkttyp.Balken) { //if it is balken it needs to check both places
-            if (to[0]-from[0]!=0 || to[1]-from[1]!=0) { //gets activated if it is being inserted
-                if(lager[to[0]][to[1]][0]==null &&lager[to[0]][to[1]][1]==null) { //if both are free it can be noved
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                if(lager[to[0]][to[1]][0]==null &&lager[to[0]][to[1]][1]==null) { //if it is moved the to is beeing activated
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+            //if it is moved the to is beeing activated
+            return (lager[to[0]][to[1]][0] == null && lager[to[0]][to[1]][1] == null);
         } else {
             if (lager[to[0]][to[1]][to[2]]!=null) { //if it is not freed it is not posible to move or insert
                 return false;
