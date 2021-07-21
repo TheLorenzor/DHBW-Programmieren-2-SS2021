@@ -73,6 +73,7 @@ public class regal extends JPanel {
 
     }
     public void update_regal(){
+        var listener = new drage();
         produkt[][][] to_check = lager.getLager();
         for (short i =0;i<5;i++) {
             for (short j = 0;j<2;j++) {
@@ -86,18 +87,56 @@ public class regal extends JPanel {
                 } else if(to_check[j][i][1]!=null) {
                     paletten[pal] = to_check[j][i][1];
                     paletten[pal].setBounds(bounds.x+30,bounds.y+20,bounds.width-50,bounds.height-50);
-                    System.out.println(paletten[pal].getIcon().getIconHeight());
-                    System.out.println(paletten[pal].getIcon().getIconWidth());
                 } else {
                     paletten[pal] = new produkt();
                     paletten[pal].setBounds(bounds);
-
                 }
+                var mtl = new MyDropTargetListener(paletten[pal]);
+                paletten[pal].setTransferHandler(new TransferHandler("text"));
+
+                paletten[pal].addMouseListener(listener);
                 this.add(paletten[pal]);
+
+
             }
         }
         this.validate();
         this.repaint();
+    }
+    private class drage extends MouseAdapter {
+        @Override
+        public void mousePressed(MouseEvent e) {
+            var c = (JComponent) e.getSource();
+            var handler = c.getTransferHandler();
+            handler.exportAsDrag(c, e, TransferHandler.COPY);
+        }
+    }
+    private class MyDropTargetListener extends DropTargetAdapter {
+
+        private final DropTarget dropTarget;
+        private final produkt label;
+
+        public MyDropTargetListener(produkt panel) {
+            this.label = panel;
+
+            dropTarget = new DropTarget(panel, DnDConstants.ACTION_COPY,
+                    this, true, null);
+        }
+
+
+        public void drop(DropTargetDropEvent event) {
+
+            try {
+
+                var tr = event.getTransferable();
+                var col = (String) tr.getTransferData(new DataFlavor("application/x-java-jvm-local-objectref; class=java.lang.String"));
+                System.out.println(col);
+            } catch (Exception e) {
+
+                e.printStackTrace();
+                event.rejectDrop();
+            }
+        }
     }
 
 }

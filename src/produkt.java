@@ -119,10 +119,6 @@ public class produkt extends JLabel {
     }
 
 
-    public boolean get_Small() {
-        return small;
-    }
-
     public produkttyp getArt() {
         return art;
     }
