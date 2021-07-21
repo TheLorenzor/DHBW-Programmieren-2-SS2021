@@ -1,5 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.net.URL;
 
 public class produkt extends JLabel {
@@ -20,11 +27,13 @@ public class produkt extends JLabel {
         bes = null;
         path =getClass().getResource("leer.png");
         change_size(false);
+        this.setText("-1");
     }
 
     public produkt(produkttyp typ,produkttyp e1,produkttyp e2){
         id = id_cnt;
         ++id_cnt;
+        this.setText(new Long(id).toString());
         set_produkt(typ,e1,e2);
     }
     public void change_size(boolean new_val) {
@@ -100,6 +109,7 @@ public class produkt extends JLabel {
         }
     }
 
+
     private static class WrongTypeException extends Exception{
         String art_f;
         public WrongTypeException(String f_art){
@@ -107,6 +117,7 @@ public class produkt extends JLabel {
             art_f=f_art;
         }
     }
+
 
     public boolean get_Small() {
         return small;

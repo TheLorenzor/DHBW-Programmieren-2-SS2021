@@ -42,6 +42,9 @@ public class GUI extends JFrame {
         new_auftrag.setBounds(66,5,90,90);
         new_auftrag.setOpaque(false);
         new_auftrag.setContentAreaFilled(false);
+        new_auftrag.addActionListener(e -> {
+            System.out.println(e.getSource());
+        });
         auftrag_menu.add(new_auftrag);
 
         JButton del_auftrag = new JButton();

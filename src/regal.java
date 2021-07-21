@@ -1,9 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class regal extends JPanel {
     produkt[] paletten;
     final produkt[] paletten_ref;
-    Lager lager;
+    public Lager lager;
     regal () {
         setSize(700,800);
         setOpaque(false);

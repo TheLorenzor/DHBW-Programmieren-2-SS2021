@@ -41,10 +41,10 @@ public class Lager {
             }
 
         }catch (InvalidMovementException IME) {
-            System.out.println("Invalid "+IME.fail+" Parameters");
+            System.err.println("Invalid "+IME.fail+" Parameters");
             return -1;
         }catch (ArrayIndexOutOfBoundsException index){
-            System.out.println("Movement außerhalb des Lagers");
+            System.err.println("Movement außerhalb des Lagers");
             return -1;
         }
         return 0;
@@ -123,8 +123,21 @@ public class Lager {
             fail = f;
         }
     }
+    public short[] find_element_by_id(long id){
 
-
+        for(short i =0;i<2;i++) {
+            for (short j =0;j<5;j++) {
+                for (short k =0;k<2;k++){
+                    if (lager[i][j][k].id==id) {
+                        short[] point = {i,j,k};
+                        return point;
+                    }
+                }
+            }
+        }
+        short[] fail = {-1,-1,-1};
+        return fail;
+    }
     public void lager_ausgeben() {
         for (int i=0;i<lager.length;i++) {
             for (int j=0;j<lager[i].length;j++) {
