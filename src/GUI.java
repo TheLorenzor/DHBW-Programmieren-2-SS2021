@@ -14,15 +14,19 @@ public class GUI extends JFrame {
     JPanel menu;
     regal main;
 
-    JLabel[] auftrage;
+    JButton[] auftrage;
+    auftrag[] news;
     JLabel bilanz_label;
     ImageIcon background;
     Dimension full_frame = new Dimension(1400,900);
 
     public GUI() {
         super("Lagersimulation");
-        main = new regal();
-        bilanz = new Bilanz();
+        this.main = new regal();
+        this.bilanz = new Bilanz();
+        this.news = new auftrag[4];
+        this.auftrage = new JButton[4];
+
         background = createImageIcon("Background.png");
         background.setImage(background.getImage().getScaledInstance(1400,900,Image.SCALE_DEFAULT));
         JLabel backgdrop = new JLabel(background);
@@ -42,6 +46,30 @@ public class GUI extends JFrame {
         new_auftrag.setBounds(66,5,90,90);
         new_auftrag.setOpaque(false);
         new_auftrag.setContentAreaFilled(false);
+        new_auftrag.addActionListener(e -> {
+            int first_empty =-1;
+            for (int i =0;i<4;i++) {
+                if (this.news[i]==null) {
+                    first_empty =i;
+                    break;
+                }
+            }
+            if (first_empty>-1) {
+                this.news[first_empty] = new auftrag();
+                produkt t = new produkt(news[first_empty].getEigenschaften()[0],
+                        news[first_empty].getEigenschaften()[1],news[first_empty].getEigenschaften()[2]);
+                this.auftrage[first_empty].setIcon(t);
+                Color color_border;
+                if (this.news[first_empty].get_einlag()){ //if it is einlagerung it is true
+                    color_border = Color.GREEN;
+                }else {
+                    color_border = Color.RED;
+                }
+                this.auftrage[first_empty].setBorder(BorderFactory.createLineBorder(color_border));
+            }
+            System.out.println(first_empty);
+
+        });
         auftrag_menu.add(new_auftrag);
 
         JButton del_auftrag = new JButton();
@@ -53,9 +81,8 @@ public class GUI extends JFrame {
         del_auftrag.setContentAreaFilled(false);
         auftrag_menu.add(del_auftrag);
 
-        this.auftrage = new JLabel[4];
         for (int i = 0;i<4;++i){
-            this.auftrage[i] = new JLabel("",SwingConstants.CENTER);
+            this.auftrage[i] = new JButton();
             int x = (i%2)*200+6;
             int y;
             if (i<2) {
@@ -64,8 +91,11 @@ public class GUI extends JFrame {
                 y=300;
             }
             this.auftrage[i].setBounds(x,y,190,190);
-            this.auftrage[i].setBackground(Color.decode("#D2D4D4"));
             this.auftrage[i].setOpaque(true);
+            this.auftrage[i].setContentAreaFilled(false);
+            this.auftrage[i].addActionListener(e -> {
+
+            });
             auftrag_menu.add(this.auftrage[i]);
         }
 

@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 
 public class auftrag {
     private Integer id;
@@ -14,10 +15,10 @@ public class auftrag {
     private static int nr;
 
     public auftrag(){
-        String path_to_csv = "D:\\Persönlich\\Duales Studium\\Studium\\SS1\\Programmieren 2\\Klausren\\src\\Leistungsnachweis.csv";
+        URL path_to_csv = getClass().getResource("Leistungsnachweis.csv");
         String[] data={};
         try {
-            BufferedReader csvread = new BufferedReader(new FileReader(path_to_csv));
+            BufferedReader csvread = new BufferedReader(new FileReader(path_to_csv.toString()));
             int i=0;
             do {
                 data = null;
@@ -82,12 +83,8 @@ public class auftrag {
     public produkttyp[] getEigenschaften() {
         return new produkttyp[]{type,eig,eig2};
     }
-    public int get_einlag(){
-        if (in_out) {
-            return 1;
-        } else {
-            return -1;
-        }
+    public boolean get_einlag(){
+        return in_out;
     }
     public int getReward(){
         return reward;
