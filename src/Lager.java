@@ -31,6 +31,11 @@ public class Lager {
                 if (check_movement(to_move,to,from)) {
                     lager[to[0]][to[1]][to[2]] = to_move;
                     lager[from[0]][from[1]][from[2]] = null;
+                    if (from[2]==0 && to[2]==1) {
+                        lager[to[0]][to[1]][to[2]].change_size(true);
+                    } else if (from[2]==1 && to[2]==0){
+                        lager[to[0]][to[1]][to[2]].change_size(false);
+                    }
                     return 0;
                 }
             }
@@ -123,13 +128,13 @@ public class Lager {
         for (short i=0;i<2;i++) {
             for (short j=0;j<5;j++) {
                 for (short k=0;k<2;k++) {
-                    if (lager[i][j][k].id==id) {
+                    if (lager[i][j][k]!=null && lager[i][j][k].id==id) {
                         return new short[]{i,j,k};
                     }
                 }
             }
         }
-        return new short[]{-1,-1};
+        return new short[]{-1,-1,-1};
     }
 
     public void lager_ausgeben() {

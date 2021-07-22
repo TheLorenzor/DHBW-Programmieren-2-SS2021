@@ -9,7 +9,6 @@ public class produkt extends ImageIcon{
     private URL path;
     private boolean small;
     public long id;
-    public ImageIcon picture;
     private long id_cnt;
 
     public produkt() {
@@ -19,14 +18,29 @@ public class produkt extends ImageIcon{
         art = null;
         bes = null;
         path =getClass().getResource("leer.png");
+        this.setImage(Toolkit.getDefaultToolkit().createImage(path));
+        this.setImage(this.getImage().getScaledInstance(193,140, Image.SCALE_DEFAULT));
+        small=false;
+
     }
 
     public produkt(produkttyp typ,produkttyp e1,produkttyp e2){
         id = id_cnt;
         ++id_cnt;
+        small=false;
         set_produkt(typ,e1,e2);
+        this.setImage(Toolkit.getDefaultToolkit().createImage(path));
+        this.setImage(this.getImage().getScaledInstance(193,140, Image.SCALE_DEFAULT));
     }
-
+    public void change_size(boolean new_val) {
+        small = new_val;
+        if(!small) {
+            this.setImage(Toolkit.getDefaultToolkit().createImage(path));
+            this.setImage(this.getImage().getScaledInstance(193,140, Image.SCALE_DEFAULT));
+        }else {
+            this.setImage(this.getImage().getScaledInstance(143,90, Image.SCALE_DEFAULT));
+        }
+    }
 
     @Override
     public String toString() {
@@ -37,6 +51,8 @@ public class produkt extends ImageIcon{
                 ", path=" + path +
                 ", id=" + id +
                 ", id_cnt=" + id_cnt +
+                ", width="+this.getIconWidth()+
+                ", height="+this.getIconHeight()+
                 '}';
     }
     public void set_produkt(produkttyp typ, produkttyp e1, produkttyp e2) {
