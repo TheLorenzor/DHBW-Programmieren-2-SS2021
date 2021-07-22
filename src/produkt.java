@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class produkt extends JLabel {
+public class produkt extends ImageIcon{
     private produkttyp type;
     private produkttyp art;
     private produkttyp bes;
@@ -19,7 +19,6 @@ public class produkt extends JLabel {
         art = null;
         bes = null;
         path =getClass().getResource("leer.png");
-        change_size(false);
     }
 
     public produkt(produkttyp typ,produkttyp e1,produkttyp e2){
@@ -27,16 +26,7 @@ public class produkt extends JLabel {
         ++id_cnt;
         set_produkt(typ,e1,e2);
     }
-    public void change_size(boolean new_val) {
-        small = new_val;
-        if(!small) {
-            picture = new ImageIcon(path);
-            this.setIcon(picture);
-            picture.setImage(picture.getImage().getScaledInstance(193,140, Image.SCALE_DEFAULT));
-        }else {
-            picture.setImage(picture.getImage().getScaledInstance(143,90, Image.SCALE_DEFAULT));
-        }
-    }
+
 
     @Override
     public String toString() {
@@ -91,7 +81,6 @@ public class produkt extends JLabel {
                 default:
                     throw new WrongTypeException("Eigenschaft");
             }
-            change_size(false);
         } catch (WrongTypeException wt) {
             System.err.println("Die Definition des Produktes hatte die falsche "+wt.art_f);
             art = null;
