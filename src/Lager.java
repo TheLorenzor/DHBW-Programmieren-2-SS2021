@@ -6,6 +6,14 @@ public class Lager {
 
     }
     public int move_palette(short[] from,short[] to){
+        /*
+        System.out.print(from[0]);
+        System.out.print(from[1]);
+        System.out.println(from[2]);
+        System.out.print(to[0]);
+        System.out.print(to[1]);
+        System.out.println(to[2]);
+        */
         try {
             if (from[0]<0||from[0]>1||from[1]<0||from[1]>4||from[2]<0||from[2]>1) { //if it is out of bounce
                 throw new ArrayIndexOutOfBoundsException();
@@ -41,10 +49,10 @@ public class Lager {
             }
 
         }catch (InvalidMovementException IME) {
-            System.out.println("Invalid "+IME.fail+" Parameters");
+            System.err.println("Invalid "+IME.fail+" Parameters");
             return -1;
         }catch (ArrayIndexOutOfBoundsException index){
-            System.out.println("Movement außerhalb des Lagers");
+            System.err.println("Movement außerhalb des Lagers");
             return -1;
         }
         return 0;

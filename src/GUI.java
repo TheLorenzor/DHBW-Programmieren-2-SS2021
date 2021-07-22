@@ -94,6 +94,29 @@ public class GUI extends JFrame {
         desc1.setOpaque(false);
         menu.add(desc1);
 
+        JButton delete_palette = new JButton();
+        ImageIcon delete_palette_icon = new ImageIcon(getClass().getResource("delete_box.png"));
+        System.out.println(delete_palette_icon);
+        delete_palette_icon.setImage(delete_palette_icon.getImage().getScaledInstance(130,130,1));
+        delete_palette.setIcon(delete_palette_icon);
+        delete_palette.setBounds(10,200,130,130);
+        delete_palette.setOpaque(false);
+        delete_palette.setContentAreaFilled(false);
+        delete_palette.addActionListener(e -> {
+            if (this.main.mode !=-1) {
+                this.main.mode = -1;
+            } else {
+                this.main.mode = 0;
+            }
+
+        });
+        menu.add(delete_palette);
+
+        JLabel desc2 = new JLabel("<html><font color='white' size='4'>Palette zerstören</font></html>",SwingConstants.CENTER);
+        desc2.setBounds(5,330,140,30);
+        desc2.setOpaque(false);
+        menu.add(desc2);
+
 
         bilanz_label=new JLabel("<html><font color='white' size='15'>Bilanz: 0€</font></html>",SwingConstants.LEFT);
         bilanz_label.setBounds(13,100,300,50);

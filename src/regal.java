@@ -37,8 +37,14 @@ public class regal extends JPanel {
                         short[] from_point =this.convert_regal_to_Lager(get_object(copy));
                         produkt to_icon = (produkt) b.getIcon();
                         short[] to_point = this.convert_regal_to_Lager(get_object(to_icon));
-                        if(to_icon.id==-1){
+                        if(to_icon.id==-1){ //wenn null ist und das zu kopierende hinten ist muss es beide hinten sein, dass beide funktionieren
                             to_point[2]=from_point[2];
+                        }
+                        if (to_icon.id!=-1 && !to_icon.get_Small() &&copy.get_Small()) { //if it is a small icon that needs to be moved behind a big icon that is valid
+                            to_point[2]=1;
+                        }
+                        if (to_icon.id!=-1&&to_icon.get_Small()&& !copy.get_Small()){ //if one is small
+                            to_point[2]=0;
                         }
                         if (to_point[0]==from_point[0]&&to_point[1]==from_point[1]&&to_point[2]==from_point[2]) {
                             if (to_point[2]==0) {
@@ -63,12 +69,24 @@ public class regal extends JPanel {
                         }
                         mode =0;
                     }
+                } else if (mode==-1 ) { //zerstören
+                    JButton button = (JButton) e.getSource();
+                    produkt ic = (produkt) button.getIcon();
+                    if (ic.id!=-1) {
+                        short[] point = convert_regal_to_Lager(this.get_object(ic));
+                        if (lager.auslagern(point)) {
+                            update_lager();
+                            mode =0;
+                        }
+                    } else {
+                        mode = 0;
+                    }
                 }
             });
             i++;
         }
         short[] t= {1,3,0};
-        lager.einlagern(t,new produkt(produkttyp.Stein,produkttyp.Granit,produkttyp.leicht));
+        lager.einlagern(t,new produkt(produkttyp.Stein,produkttyp.Granit,produkttyp.mittel));
         short[] to = {1,4,0};
         lager.einlagern(to,new produkt(produkttyp.Holz,produkttyp.Kiefer,produkttyp.Bretter));
 
