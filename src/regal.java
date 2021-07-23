@@ -93,15 +93,37 @@ public class regal extends JPanel {
         update_lager();
     }
     public void update_lager() {
-        for (int i =0;i<10;i++) {
-            short[] point = convert_regal_to_Lager(i);
-            produkt t = (produkt) paletten[i].getIcon();
-            if (lager.getLager()[point[0]][point[1]][0]==null && lager.getLager()[point[0]][point[1]][1]==null) {
-                paletten[i].setIcon(new produkt());
-            } else if(lager.getLager()[point[0]][point[1]][0]!=null){
-                paletten[i].setIcon(lager.getLager()[point[0]][point[1]][0]);
-            } else if (lager.getLager()[point[0]][point[1]][1]!=null){
-                paletten[i].setIcon(lager.getLager()[point[0]][point[1]][1]);
+        if (this.mode<1) {
+            for (int i =0;i<10;i++) {
+                short[] point = convert_regal_to_Lager(i);
+                produkt t = (produkt) paletten[i].getIcon();
+                if (lager.getLager()[point[0]][point[1]][0]==null && lager.getLager()[point[0]][point[1]][1]==null) {
+                    paletten[i].setIcon(new produkt());
+                } else if(lager.getLager()[point[0]][point[1]][0]!=null){
+                    paletten[i].setIcon(lager.getLager()[point[0]][point[1]][0]);
+                } else if (lager.getLager()[point[0]][point[1]][1]!=null){
+                    paletten[i].setIcon(lager.getLager()[point[0]][point[1]][1]);
+                }
+                paletten[i].setBorder(BorderFactory.createLineBorder(Color.black));
+            }
+        } else if (this.mode==1) {
+            for (int i=0;i<10;i++) {
+                produkt val =(produkt) paletten[i].getIcon();
+                if (val.get_Small()||val.id==-1) {
+                    paletten[i].setBorder(BorderFactory.createLineBorder(Color.green));
+                } else {
+                    paletten[i].setBorder(BorderFactory.createLineBorder(Color.red));
+                }
+            }
+        } else if (this.mode==2) {
+            for (int i =0;i<10;i++) {
+                produkt val = (produkt) paletten[i].getIcon();
+                produkt to_compare = copy;
+                if (val.getEigen()==to_compare.getEigen()&&val.getType()==to_compare.getType()&&val.getArt()==to_compare.getArt()) {
+                    paletten[i].setBorder(BorderFactory.createLineBorder(Color.green));
+                } else {
+                    paletten[i].setBorder(BorderFactory.createLineBorder(Color.red));
+                }
             }
         }
         this.validate();

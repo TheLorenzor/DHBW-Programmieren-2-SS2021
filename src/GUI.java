@@ -183,9 +183,9 @@ public class GUI extends JFrame {
     private void button_auftrag_click(ActionEvent e){
         JButton but =(JButton) e.getSource();
         produkt prod = (produkt) but.getIcon();
+        int pos =this.find_auftrag(but);
         if (this.mode_auftrag==1){
             if (prod!=null) {
-                int pos =this.find_auftrag(but);
                 this.auftrage[pos].setIcon(null);
                 this.auftrage[pos].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 this.news[pos]=null;
@@ -193,11 +193,19 @@ public class GUI extends JFrame {
                 this.auftrag_menu.repaint();
             }
         } else if (this.mode_auftrag==0){
-            if (this.main.mode!=1) {
+
+            if (this.main.mode<1) {
                 this.main.copy = prod;
-                this.main.mode=1;
-            } else if (this.main.mode==1) {
+                if (this.news[pos].get_einlag()) { //1 wenn eingelagert wird ansonsten 2
+                    this.main.mode=1;
+                } else {
+                    this.main.mode=2;
+                }
+                this.main.update_lager();
+            } else {
                 this.main.mode=0;
+                this.main.copy = null;
+                this.main.update_lager();
             }
 
         }
