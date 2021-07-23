@@ -69,6 +69,7 @@ public class GUI extends JFrame {
                 }
                 this.auftrage[first_empty].setBorder(BorderFactory.createLineBorder(color_border));
                 this.auftrage[first_empty].addActionListener(this::button_auftrag_click);
+                this.auftrag_menu.repaint();
             }
 
         });

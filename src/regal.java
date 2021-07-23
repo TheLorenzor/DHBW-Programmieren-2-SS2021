@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 public class regal extends JPanel {
     JButton[] paletten;
@@ -31,8 +32,8 @@ public class regal extends JPanel {
             paletten[i].setOpaque(false);
             paletten[i].setContentAreaFilled(false);
             paletten[i].addActionListener(e -> {
+                JButton b = (JButton) e.getSource();
                 if (mode ==0) { //if it is in normal movement mode
-                    JButton b = (JButton) e.getSource();
                     if (copy!=null) { //if something needs to be moved
                         short[] from_point =this.convert_regal_to_Lager(get_object(copy));
                         produkt to_icon = (produkt) b.getIcon();
@@ -70,17 +71,16 @@ public class regal extends JPanel {
                         mode =0;
                     }
                 } else if (mode==-1 ) { //zerstören
-                    JButton button = (JButton) e.getSource();
-                    produkt ic = (produkt) button.getIcon();
+                    produkt ic = (produkt) b.getIcon();
                     if (ic.id!=-1) {
                         short[] point = convert_regal_to_Lager(this.get_object(ic));
                         if (lager.auslagern(point)) {
                             update_lager();
-                            mode =0;
+                            mode = 0;
                         }
-                    } else if (mode==1){
-                        this.mode = 0;
                     }
+                } else if (mode==1) {
+
                 }
             });
             i++;
