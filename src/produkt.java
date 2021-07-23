@@ -9,7 +9,7 @@ public class produkt extends ImageIcon{
     private URL path;
     private boolean small;
     public long id;
-    private long id_cnt;
+    private static long id_cnt;
 
     public produkt() {
         super();
@@ -26,7 +26,7 @@ public class produkt extends ImageIcon{
 
     public produkt(produkttyp typ,produkttyp e1,produkttyp e2){
         id = id_cnt;
-        ++id_cnt;
+        id_cnt++;
         small=false;
         set_produkt(typ,e1,e2);
         this.setImage(Toolkit.getDefaultToolkit().createImage(path));

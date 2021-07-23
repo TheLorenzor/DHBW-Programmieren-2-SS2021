@@ -13,7 +13,7 @@ public class GUI extends JFrame {
     JPanel auftrag_menu;
     JPanel menu;
     regal main;
-
+    int mode_auftrag;
     JButton[] auftrage;
     auftrag[] news;
     JLabel bilanz_label;
@@ -26,6 +26,7 @@ public class GUI extends JFrame {
         this.bilanz = new Bilanz();
         this.news = new auftrag[4];
         this.auftrage = new JButton[4];
+        this.mode_auftrag = 0; //0 for normal stuff --> 1 for deleting the stuff
 
         background = createImageIcon("Background.png");
         background.setImage(background.getImage().getScaledInstance(1400,900,Image.SCALE_DEFAULT));
@@ -47,6 +48,7 @@ public class GUI extends JFrame {
         new_auftrag.setOpaque(false);
         new_auftrag.setContentAreaFilled(false);
         new_auftrag.addActionListener(e -> {
+            this.mode_auftrag=0;
             int first_empty =-1;
             for (int i =0;i<4;i++) {
                 if (this.news[i]==null) {
@@ -56,9 +58,6 @@ public class GUI extends JFrame {
             }
             if (first_empty>-1) {
                 this.news[first_empty] = new auftrag();
-                System.out.println(news[first_empty].getEigenschaften()[0]);
-                System.out.println(news[first_empty].getEigenschaften()[1]);
-                System.out.println(news[first_empty].getEigenschaften()[2]);
                 produkt t = new produkt(news[first_empty].getEigenschaften()[0],
                         news[first_empty].getEigenschaften()[1],news[first_empty].getEigenschaften()[2]);
                 this.auftrage[first_empty].setIcon(t);
@@ -69,8 +68,8 @@ public class GUI extends JFrame {
                     color_border = Color.RED;
                 }
                 this.auftrage[first_empty].setBorder(BorderFactory.createLineBorder(color_border));
+                this.auftrage[first_empty].addActionListener(this::button_auftrag_click);
             }
-            System.out.println(first_empty);
 
         });
         auftrag_menu.add(new_auftrag);
@@ -82,6 +81,13 @@ public class GUI extends JFrame {
         del_auftrag.setBounds(233,5,90,90);
         del_auftrag.setOpaque(false);
         del_auftrag.setContentAreaFilled(false);
+        del_auftrag.addActionListener(e->{
+            if (this.mode_auftrag==0) {
+                this.mode_auftrag = 1;
+            } else {
+                this.mode_auftrag=0;
+            }
+        });
         auftrag_menu.add(del_auftrag);
 
         for (int i = 0;i<4;++i){
@@ -96,9 +102,7 @@ public class GUI extends JFrame {
             this.auftrage[i].setBounds(x,y,190,190);
             this.auftrage[i].setOpaque(true);
             this.auftrage[i].setContentAreaFilled(false);
-            this.auftrage[i].addActionListener(e -> {
-
-            });
+            this.auftrage[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
             auftrag_menu.add(this.auftrage[i]);
         }
 
@@ -129,15 +133,14 @@ public class GUI extends JFrame {
 
         JButton delete_palette = new JButton();
         ImageIcon delete_palette_icon = new ImageIcon(getClass().getResource("delete_box.png"));
-        System.out.println(delete_palette_icon);
         delete_palette_icon.setImage(delete_palette_icon.getImage().getScaledInstance(130,130,1));
         delete_palette.setIcon(delete_palette_icon);
         delete_palette.setBounds(10,200,130,130);
         delete_palette.setOpaque(false);
         delete_palette.setContentAreaFilled(false);
         delete_palette.addActionListener(e -> {
-            if (this.main.mode !=-1) {
-                this.main.mode = -1;
+            if (this.main.mode !=1) {
+                this.main.mode = 1;
             } else {
                 this.main.mode = 0;
             }
@@ -176,6 +179,36 @@ public class GUI extends JFrame {
             System.err.println("Couldnt find file");
             return null;
         }
+    }
+    private void button_auftrag_click(ActionEvent e){
+        JButton but =(JButton) e.getSource();
+        produkt prod = (produkt) but.getIcon();
+        if (this.mode_auftrag==1){
+            if (prod!=null) {
+                int pos =this.find_auftrag(but);
+                this.auftrage[pos].setIcon(null);
+                this.auftrage[pos].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                this.news[pos]=null;
+                this.mode_auftrag = 0;
+                this.auftrag_menu.repaint();
+            }
+        } else if (this.mode_auftrag==0){
+            if (this.main.mode!=1) {
+                this.main.copy = prod;
+                this.main.mode=1;
+            } else if (this.main.mode==1) {
+                this.main.mode=0;
+            }
+
+        }
+    }
+    public int find_auftrag(JButton needle) {
+        for (short i =0;i<this.auftrage.length;i++) {
+            if (this.auftrage[i]!=null&&this.auftrage[i].equals(needle)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

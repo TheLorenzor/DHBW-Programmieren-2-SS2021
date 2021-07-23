@@ -3,13 +3,13 @@ public enum produkttyp {
     Weis{
         @Override
         public String toString() {
-            return "Weiß";
+            return "Weiss";
         }
     },
     Gruen{
         @Override
         public String toString() {
-            return "Grün";
+            return "Gruen";
         }
     }, Blau, A3,A4,A5,
     Holz, Kiefer, Buche, Eiche,Bretter,Balken,Scheit,

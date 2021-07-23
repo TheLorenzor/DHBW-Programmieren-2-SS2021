@@ -78,8 +78,8 @@ public class regal extends JPanel {
                             update_lager();
                             mode =0;
                         }
-                    } else {
-                        mode = 0;
+                    } else if (mode==1){
+                        this.mode = 0;
                     }
                 }
             });

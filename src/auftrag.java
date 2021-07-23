@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 
 public class auftrag {
@@ -15,11 +12,10 @@ public class auftrag {
     private static int nr;
 
     public auftrag(){
-        URL path_to_csv = getClass().getResource("Leistungsnachweis.csv");
-        System.out.println(path_to_csv.toString());
         String[] data={};
         try {
-            BufferedReader csvread = new BufferedReader(new FileReader(path_to_csv.toString()));
+            InputStream input_file = getClass().getResourceAsStream("Leistungsnachweis.csv");
+            BufferedReader csvread = new BufferedReader(new InputStreamReader(input_file));
             int i=0;
             do {
                 data = null;
@@ -44,7 +40,7 @@ public class auftrag {
         } catch (IOException io) {
             System.out.println("Eingabefehler");
         }
-        if (data.length!=0){
+        if (data!=null&&data.length!=0){
             id = Integer.parseInt(data[0]);
             in_out= data[1].equals("Einlagerung");
             reward = Integer.parseInt(data[5]);
@@ -56,7 +52,7 @@ public class auftrag {
                 type = produkttyp.Stein;
             }
             switch (data[3]) {
-                case "Wei�" -> eig = produkttyp.Weis;
+                case "Weiss" -> eig = produkttyp.Weis;
                 case "Grün" -> eig = produkttyp.Gruen;
                 case "Blau" -> eig = produkttyp.Blau;
                 case "Kiefer" -> eig = produkttyp.Kiefer;
@@ -78,6 +74,8 @@ public class auftrag {
                 case "Schwer" -> eig2 = produkttyp.schwer;
             }
 
+        } else {
+            nr=0;
         }
     }
 
