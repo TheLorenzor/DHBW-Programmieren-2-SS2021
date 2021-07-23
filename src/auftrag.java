@@ -16,6 +16,7 @@ public class auftrag {
 
     public auftrag(){
         URL path_to_csv = getClass().getResource("Leistungsnachweis.csv");
+        System.out.println(path_to_csv.toString());
         String[] data={};
         try {
             BufferedReader csvread = new BufferedReader(new FileReader(path_to_csv.toString()));

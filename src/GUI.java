@@ -56,6 +56,9 @@ public class GUI extends JFrame {
             }
             if (first_empty>-1) {
                 this.news[first_empty] = new auftrag();
+                System.out.println(news[first_empty].getEigenschaften()[0]);
+                System.out.println(news[first_empty].getEigenschaften()[1]);
+                System.out.println(news[first_empty].getEigenschaften()[2]);
                 produkt t = new produkt(news[first_empty].getEigenschaften()[0],
                         news[first_empty].getEigenschaften()[1],news[first_empty].getEigenschaften()[2]);
                 this.auftrage[first_empty].setIcon(t);
