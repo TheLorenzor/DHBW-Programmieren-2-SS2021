@@ -5,8 +5,10 @@ public class regal extends JPanel {
     JButton[] paletten;
     Lager lager;
     produkt copy;
+    GUI gui;
     public int mode; //0= movement --> 1 gleich ein auslagern bzw. löschen
-    regal () {
+    regal (GUI gui) {
+        this.gui = gui;
         setSize(700,800);
         setOpaque(false);
         setLocation(440,30);
@@ -85,6 +87,12 @@ public class regal extends JPanel {
                         short[] point =this.convert_regal_to_Lager(this.get_object(ic));
                         point[2]=0;
                         this.lager.einlagern(point,copy);
+                        int pos = this.gui.find_produkt(copy);
+                        if (pos>-1) {
+
+                        }else {
+                            System.err.println("Nichts gefunden");
+                        }
                         this.mode =0;
                         this.copy = null;
                         this.update_lager();

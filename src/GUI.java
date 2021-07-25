@@ -26,10 +26,10 @@ public class GUI extends JFrame {
 
     public GUI() {
         super("Lagersimulation");
-        this.main = new regal();
+        this.main = new regal(this);
         this.bilanz = new Bilanz();
         this.news = new auftrag[4];
-        this.auftrage = new JButton[4];
+        auftrage = new JButton[4];
         this.mode_auftrag = 0; //0 for normal stuff --> 1 for deleting the stuff
 
         background = createImageIcon("Background.png");
@@ -207,6 +207,7 @@ public class GUI extends JFrame {
                     this.main.mode=2;
                 }
                 this.main.update_lager();
+
             } else {
                 this.main.mode=0;
                 this.main.copy = null;
@@ -223,11 +224,14 @@ public class GUI extends JFrame {
         }
         return -1;
     }
-    private class Regallistener implements PropertyChangeListener {
-        @Override
-        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-            System.out.println(propertyChangeEvent.getSource());
-        }
-    }
+    public int find_produkt(produkt needle){
+        for (int i =0;i<this.news.length;i++) {
+            produkt t = (produkt) auftrage[i].getIcon();
+            if (needle.equals(t)) {
+                return i;
 
+            }
+        }
+        return -1;
+    }
 }
