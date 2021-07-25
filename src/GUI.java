@@ -188,6 +188,7 @@ public class GUI extends JFrame {
     private void button_auftrag_click(ActionEvent e){
         JButton but =(JButton) e.getSource();
         produkt prod = (produkt) but.getIcon();
+        System.out.println("click");
         int pos =this.find_auftrag(but);
         if (this.mode_auftrag==1){
             if (prod!=null) {

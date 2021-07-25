@@ -83,19 +83,26 @@ public class regal extends JPanel {
                     }
                 } else if (mode==1) {
                     produkt ic = (produkt) b.getIcon(); //get icon where it has been clicked
-                    if(ic.id==-1||ic.get_Small()) {
+                    if((ic.id==-1||ic.get_Small())) {
                         short[] point =this.convert_regal_to_Lager(this.get_object(ic));
                         point[2]=0;
-                        this.lager.einlagern(point,copy);
-                        int pos = this.gui.find_produkt(copy);
-                        if (pos>-1) {
-
-                        }else {
-                            System.err.println("Nichts gefunden");
+                        if (this.lager.einlagern(point,copy)) {
+                            int pos = this.gui.find_produkt(copy);
+                            if (pos>-1) {
+                                this.gui.auftrage[pos].setIcon(null);
+                                this.gui.auftrage[pos].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                                this.gui.auftrage[pos].removeActionListener(this.gui.auftrage[pos].getActionListeners()[0]);
+                                //TODO: Bilanz umschieben
+                                this.gui.news[pos] = null;
+                                this.gui.auftrag_menu.repaint();
+                            }else {
+                                System.err.println("Nichts gefunden");
+                            }
+                            this.mode =0;
+                            this.copy = null;
+                            System.out.println(this.mode);
+                            this.update_lager();
                         }
-                        this.mode =0;
-                        this.copy = null;
-                        this.update_lager();
                     }
                 }
             });
