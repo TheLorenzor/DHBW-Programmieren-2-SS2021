@@ -80,7 +80,15 @@ public class regal extends JPanel {
                         }
                     }
                 } else if (mode==1) {
-
+                    produkt ic = (produkt) b.getIcon(); //get icon where it has been clicked
+                    if(ic.id==-1||ic.get_Small()) {
+                        short[] point =this.convert_regal_to_Lager(this.get_object(ic));
+                        point[2]=0;
+                        this.lager.einlagern(point,copy);
+                        this.mode =0;
+                        this.copy = null;
+                        this.update_lager();
+                    }
                 }
             });
             i++;

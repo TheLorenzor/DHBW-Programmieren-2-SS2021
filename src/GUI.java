@@ -1,10 +1,14 @@
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.util.Objects;
 
@@ -218,6 +222,12 @@ public class GUI extends JFrame {
             }
         }
         return -1;
+    }
+    private class Regallistener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+            System.out.println(propertyChangeEvent.getSource());
+        }
     }
 
 }
