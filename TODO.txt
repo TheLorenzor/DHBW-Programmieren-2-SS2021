@@ -1,0 +1,2 @@
+TODO 1: Bei auftrag wenn es wieder von 0 anfängt kommt es zu problemen mit den neuen Dingen. viele Errors: evtl weil nButton gelöscht wird?
+Exception in thread "AWT-EventQueue-0" java.lang.NullPointerException: Cannot invoke "auftrag.get_einlag()" because "this.news[pos]" is null
