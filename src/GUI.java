@@ -9,6 +9,7 @@ public class GUI extends JFrame {
     regal main;
     int mode_auftrag;
     JButton[] auftrage;
+    JLabel[] auftrage_label;
     auftrag[] news;
     JLabel bilanz_label;
     ImageIcon background;
@@ -20,6 +21,7 @@ public class GUI extends JFrame {
         this.main = new regal(this);
         this.news = new auftrag[4];
         auftrage = new JButton[4];
+        auftrage_label = new JLabel[4];
         this.mode_auftrag = 0; //0 for normal stuff --> 1 for deleting the stuff
 
         background = createImageIcon("Background.png");
@@ -63,6 +65,7 @@ public class GUI extends JFrame {
                 }
                 this.auftrage[first_empty].setBorder(BorderFactory.createLineBorder(color_border));
                 this.auftrage[first_empty].addActionListener(this::button_auftrag_click);
+                this.auftrage_label[first_empty].setText("<html><font color='white'>"+news[first_empty].getReward()+"€</font></html>");
                 this.auftrag_menu.repaint();
             }
 
@@ -92,12 +95,17 @@ public class GUI extends JFrame {
             if (i<2) {
                 y=100;
             } else {
-                y=300;
+                y=295;
             }
-            this.auftrage[i].setBounds(x,y,190,190);
+
+            this.auftrage[i].setBounds(x,y,190,170);
             this.auftrage[i].setOpaque(true);
             this.auftrage[i].setContentAreaFilled(false);
             this.auftrage[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            this.auftrage_label[i] = new JLabel("<html><font color='white'>---</font></html>",SwingConstants.CENTER);
+            this.auftrage_label[i].setBounds(x,y+175,190,10);
+            this.auftrage_label[i].setOpaque(false);
+            auftrag_menu.add(this.auftrage_label[i]);
             auftrag_menu.add(this.auftrage[i]);
         }
 
@@ -189,11 +197,15 @@ public class GUI extends JFrame {
                 this.auftrag_menu.repaint();
                 this.bilanz_label.setText("<html><font color='white' size='15'>Bilanz: "+this.bilanz.summe+"€</font></html>");
                 this.repaint();
+                this.auftrage[pos].removeActionListener(this.auftrage[pos].getActionListeners()[0]);
+                this.auftrage_label[pos].setText("<html><font color='white'>---</font></html>");
+
+                return;
             }
         } else if (this.mode_auftrag==0){
-
             if (this.main.mode<1) {
                 this.main.copy = prod;
+
                 if (this.news[pos].get_einlag()) { //1 wenn eingelagert wird ansonsten 2
                     this.main.mode=1;
                 } else {
