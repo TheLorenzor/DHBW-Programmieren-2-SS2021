@@ -102,7 +102,7 @@ public class Lager {
                 return false;
             }
             if(t.getType()==produkttyp.Stein) {
-                if(t.getEigen()==produkttyp.schwer && to[1]>1){
+                if(t.getEigen()==produkttyp.schwer && to[1]>0){
                     return false;
                 }
                 if(t.getEigen()==produkttyp.mittel && to[1]==4) {

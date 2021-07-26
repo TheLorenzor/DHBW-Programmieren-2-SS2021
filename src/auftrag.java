@@ -14,14 +14,18 @@ public class auftrag {
     public auftrag(){
         String[] data={};
         try {
-            InputStream input_file = getClass().getResourceAsStream("Leistungsnachweis.csv");
+            InputStream input_file = getClass().getResourceAsStream("Leistungsnachweis.csv"); //einlesen des files
             BufferedReader csvread = new BufferedReader(new InputStreamReader(input_file));
             int i=0;
-            do {
+            do { //iteriert zu der jeweiligen Stelle durch um das Problem zu finden
                 data = null;
                 if (nr==0){
                     csvread.readLine();
                     nr=2;
+                    String row = csvread.readLine();
+                    data = row.split(";");
+                    i++;
+                    break;
                 } else {
                     String row= csvread.readLine();
                     if (row ==null) {
@@ -52,8 +56,7 @@ public class auftrag {
                 type = produkttyp.Stein;
             }
             switch (data[3]) {
-                case "Weiss" -> eig = produkttyp.Weis;
-                case "Grün" -> eig = produkttyp.Gruen;
+                case "Grün", "Gr�n" -> eig = produkttyp.Gruen;
                 case "Blau" -> eig = produkttyp.Blau;
                 case "Kiefer" -> eig = produkttyp.Kiefer;
                 case "Buche" -> eig = produkttyp.Buche;
@@ -61,6 +64,7 @@ public class auftrag {
                 case "Marmor" -> eig = produkttyp.Marmor;
                 case "Granit" -> eig = produkttyp.Granit;
                 case "Sandstein" -> eig = produkttyp.Sandstein;
+                default -> eig=produkttyp.Weis;
             }
             switch (data[4]) {
                 case "A3" -> eig2 = produkttyp.A3;

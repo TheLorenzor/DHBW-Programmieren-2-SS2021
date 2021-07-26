@@ -61,7 +61,8 @@ public class Bilanz extends JFrame {
         this.ausgaben_label.setBounds(326,10,150,30);
         kulminiert.add(this.ausgaben_label);
         this.add(kulminiert);
-
+        ImageIcon bilanz_icon = new ImageIcon(getClass().getResource("icon_bilanz.png"));
+        this.setIconImage(bilanz_icon.getImage());
     }
     private class mymodel extends AbstractTableModel {
         Vector<String> columns ;
