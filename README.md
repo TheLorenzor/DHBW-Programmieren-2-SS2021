@@ -20,13 +20,12 @@ ansonsten passiert nichts.
 Wenn Sie doppelt auf ein Produkt klicken, veschieben sie es nach hinten bzw. nach vorne und können somit einfach
 navigieren zwischen den Plätzen. Paletten die nach hinten geschoben sind werden nicht dagestellt, da sie von
 vorne nicht sichtbar mehr sind.
-
 ##Löschen eines Elementes
 Falls Sie ein Element löschen wollen, clicken Sie auf: *Palette zerstören*. Danach auf das entsprechende feld.
 WEnn sie ein nicht leeres Feld ausgewählt haben wird das Feld gelöscht.
-
 #Bilanz
 Über Bilanz einsehen können Sie alle Verschiebungen und Tätigkeiten, die sie je getan haben einsehen.
-
-
+#Paletten
+Die einzelnen Paletten werden durch symbole dargestellt. Dabei ist die dritte Eigenschaft immer auf dem Kärtchen selber
+geschriben
 
