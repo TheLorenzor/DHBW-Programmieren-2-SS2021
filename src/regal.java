@@ -228,25 +228,6 @@ public class regal extends JPanel {
         }
         return -1;
     }
-    public int convert_regal_to_Lager(short[] point) {
-        if (point[0]==0) {
-            return switch (point[1]) {
-                case 0 -> 4;
-                case 1 -> 3;
-                case 2 -> 2;
-                case 3 -> 1;
-                default -> 0;
-            };
-        } else {
-            return switch (point[1]) {
-                case 0 -> 9;
-                case 1 -> 8;
-                case 2 -> 7;
-                case 3 -> 6;
-                default -> 5;
-            };
-        }
-    }
     public short[] convert_regal_to_Lager(int pos) {
         produkt prod = (produkt) paletten[pos].getIcon();
         short i =0;
