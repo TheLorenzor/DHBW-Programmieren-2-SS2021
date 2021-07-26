@@ -1,16 +1,6 @@
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.net.URL;
-import java.util.Objects;
 
 public class GUI extends JFrame {
     Bilanz bilanz;
@@ -26,8 +16,8 @@ public class GUI extends JFrame {
 
     public GUI() {
         super("Lagersimulation");
-        this.main = new regal(this);
         this.bilanz = new Bilanz();
+        this.main = new regal(this);
         this.news = new auftrag[4];
         auftrage = new JButton[4];
         this.mode_auftrag = 0; //0 for normal stuff --> 1 for deleting the stuff
@@ -144,8 +134,8 @@ public class GUI extends JFrame {
         delete_palette.setOpaque(false);
         delete_palette.setContentAreaFilled(false);
         delete_palette.addActionListener(e -> {
-            if (this.main.mode !=1) {
-                this.main.mode = 1;
+            if (this.main.mode !=-1) {
+                this.main.mode = -1;
             } else {
                 this.main.mode = 0;
             }
@@ -188,15 +178,17 @@ public class GUI extends JFrame {
     private void button_auftrag_click(ActionEvent e){
         JButton but =(JButton) e.getSource();
         produkt prod = (produkt) but.getIcon();
-        System.out.println("click");
         int pos =this.find_auftrag(but);
         if (this.mode_auftrag==1){
             if (prod!=null) {
                 this.auftrage[pos].setIcon(null);
                 this.auftrage[pos].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                this.bilanz.add_Buchung(bilanztyp.auftrag_delete,this.news[pos]);
                 this.news[pos]=null;
                 this.mode_auftrag = 0;
                 this.auftrag_menu.repaint();
+                this.bilanz_label.setText("<html><font color='white' size='15'>Bilanz: "+this.bilanz.summe+"€</font></html>");
+                this.repaint();
             }
         } else if (this.mode_auftrag==0){
 

@@ -6,9 +6,11 @@ public class regal extends JPanel {
     Lager lager;
     produkt copy;
     GUI gui;
+    Bilanz bilanz;
     public int mode; //0= movement --> 1 gleich ein auslagern bzw. löschen
     regal (GUI gui) {
         this.gui = gui;
+        this.bilanz = this.gui.bilanz;
         setSize(700,800);
         setOpaque(false);
         setLocation(440,30);
@@ -49,19 +51,32 @@ public class regal extends JPanel {
                         if (to_icon.id!=-1&&to_icon.get_Small()&& !copy.get_Small()){ //if one is small
                             to_point[2]=0;
                         }
-                        if (to_point[0]==from_point[0]&&to_point[1]==from_point[1]&&to_point[2]==from_point[2]) {
+                        if (to_point[0]==from_point[0]&&to_point[1]==from_point[1]&&to_point[2]==from_point[2]) { //wenn beides das selbe ist
                             if (to_point[2]==0) {
                                 to_point[2]=1;
                             } else{
                                 to_point[2]=0;
                             }
                             if(lager.move_palette(from_point,to_point)==0){
-                                 copy = null;
+                                copy = null;
+                                Runnable t = () -> {
+                                    bilanz.add_Buchung(bilanztyp.reaarange,from_point,to_point);
+                                    gui.bilanz_label.setText("<html><font color='white' size='15'>Bilanz: "+gui.bilanz.summe+"€</font></html>");
+                                    gui.repaint();
+                                };
+                                t.run();
+                                this.update_lager();
 
                             }
                         } else if(lager.move_palette(from_point,to_point)==0) {
                             copy=null;
-                            update_lager();
+                            Runnable t = () -> {
+                                bilanz.add_Buchung(bilanztyp.reaarange,from_point,to_point);
+                                gui.bilanz_label.setText("<html><font color='white' size='15'>Bilanz: "+gui.bilanz.summe+"€</font></html>");
+                                gui.repaint();
+                            };
+                            t.run();
+                            this.update_lager();
                         }
                         copy=null;
                     } else {
@@ -74,14 +89,25 @@ public class regal extends JPanel {
                     }
                 } else if (mode==-1 ) { //zerstören
                     produkt ic = (produkt) b.getIcon();
-                    if (ic.id!=-1) {
+                    System.out.println(get_object(ic));
+                    if (ic.id!=-1&&(this.get_object(ic)==4||this.get_object(ic)==9)) {
                         short[] point = convert_regal_to_Lager(this.get_object(ic));
                         if (lager.auslagern(point)) {
-                            update_lager();
-                            mode = 0;
+                            Runnable t =new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    bilanz.add_Buchung(bilanztyp.destroy,point,point);
+                                    gui.bilanz_label.setText("<html><font color='white' size='15'>Bilanz: "+gui.bilanz.summe+"€</font></html>");
+                                    gui.repaint();
+                                }
+                            };
+                            t.run();
+                            this.update_lager();
                         }
-                    }
-                } else if (mode==1) {
+                    }//TODO: bei verschiebung horizontal auch bilanz ändern
+                    mode=0;
+                } else if (mode==1) { //einlagern
                     produkt ic = (produkt) b.getIcon(); //get icon where it has been clicked
                     if((ic.id==-1||ic.get_Small())) {
                         short[] point =this.convert_regal_to_Lager(this.get_object(ic));
@@ -92,47 +118,78 @@ public class regal extends JPanel {
                                 this.gui.auftrage[pos].setIcon(null);
                                 this.gui.auftrage[pos].setBorder(BorderFactory.createLineBorder(Color.BLACK));
                                 this.gui.auftrage[pos].removeActionListener(this.gui.auftrage[pos].getActionListeners()[0]);
-                                //TODO: Bilanz umschieben
+                                Runnable run = () -> {
+                                    gui.auftrag_menu.repaint();
+                                    bilanz.add_Buchung(bilanztyp.auftrag,gui.news[pos]);
+                                    gui.bilanz_label.setText("<html><font color='white' size='15'>Bilanz: "+gui.bilanz.summe+"€</font></html>");
+                                    gui.repaint();
+                                };
+                                run.run();
                                 this.gui.news[pos] = null;
-                                this.gui.auftrag_menu.repaint();
+
                             }else {
                                 System.err.println("Nichts gefunden");
                             }
                             this.mode =0;
                             this.copy = null;
-                            System.out.println(this.mode);
                             this.update_lager();
                         }
+                    }
+                } else if (mode==2){ //auslagern
+                    produkt ic = (produkt) b.getIcon(); //get icon where it has been clicked
+                    if (ic.getEigen()==copy.getEigen()&&ic.getType()==copy.getType()&&ic.getArt()==copy.getArt()&&!ic.get_Small()) {
+                        short [] point = this.convert_regal_to_Lager(this.get_object(ic));
+                        if(lager.auslagern(point)) {
+                            int pos =this.gui.find_produkt(copy);
+
+                            Runnable run = () -> {
+                                gui.auftrag_menu.repaint();
+                                bilanz.add_Buchung(bilanztyp.auftrag,gui.news[pos]);
+                                gui.bilanz_label.setText("<html><font color='white' size='15'>Bilanz: "+gui.bilanz.summe+"€</font></html>");
+                                gui.repaint();
+                            };
+                            run.run();
+                            this.gui.news[pos]=null;
+                            this.gui.auftrage[pos].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                            this.gui.auftrage[pos].setIcon(null);
+                            this.gui.auftrage[pos].removeActionListener(this.gui.auftrage[pos].getActionListeners()[0]);
+                            this.mode =0;
+                            this.copy = null;
+                            this.update_lager();
+                        }
+
+
                     }
                 }
             });
             i++;
         }
-        short[] t= {1,3,0};
-        lager.einlagern(t,new produkt(produkttyp.Stein,produkttyp.Granit,produkttyp.mittel));
-        short[] to = {1,4,0};
-        lager.einlagern(to,new produkt(produkttyp.Holz,produkttyp.Kiefer,produkttyp.Bretter));
-
         update_lager();
     }
-    public void update_lager() {
-        if (this.mode<1) {
+    //TODO: anzeigen in GUI wie viel Euro gewinn
+    public void update_lager() { //updates the regal to match the look
+        if (this.mode<1) { //if it does not need to indicate where it is beeing pulled / pushed to this is used
             for (int i =0;i<10;i++) {
                 short[] point = convert_regal_to_Lager(i);
                 produkt t = (produkt) paletten[i].getIcon();
                 if (lager.getLager()[point[0]][point[1]][0]==null && lager.getLager()[point[0]][point[1]][1]==null) {
+                    //if both is empty than an empty produkt is set in as icon
                     paletten[i].setIcon(new produkt());
                 } else if(lager.getLager()[point[0]][point[1]][0]!=null){
+                    //else if is the point beein shown as normal size
                     paletten[i].setIcon(lager.getLager()[point[0]][point[1]][0]);
                 } else if (lager.getLager()[point[0]][point[1]][1]!=null){
+                    //else wise the back is used (to move it back it needs to pulled back where the small factor is also changed
                     paletten[i].setIcon(lager.getLager()[point[0]][point[1]][1]);
                 }
                 paletten[i].setBorder(BorderFactory.createLineBorder(Color.black));
             }
-        } else if (this.mode==1) {
-            for (int i=0;i<10;i++) {
+        } else if (this.mode==1) { //if it is in einlagerungs modus
+            for (int i=0;i<10;i++) { //für jedes einzelne Zeichen wird grün oder rot genutzt
                 produkt val =(produkt) paletten[i].getIcon();
-                if (val.get_Small()||val.id==-1) {
+                short[] point = convert_regal_to_Lager(i);
+                point[2]=0;
+                if ((val.get_Small()||val.id==-1)&& lager.check_movement(copy,point,point)) {
                     paletten[i].setBorder(BorderFactory.createLineBorder(Color.green));
                 } else {
                     paletten[i].setBorder(BorderFactory.createLineBorder(Color.red));
@@ -142,7 +199,7 @@ public class regal extends JPanel {
             for (int i =0;i<10;i++) {
                 produkt val = (produkt) paletten[i].getIcon();
                 produkt to_compare = copy;
-                if (val.getEigen()==to_compare.getEigen()&&val.getType()==to_compare.getType()&&val.getArt()==to_compare.getArt()) {
+                if (val.getEigen()==to_compare.getEigen()&&val.getType()==to_compare.getType()&&val.getArt()==to_compare.getArt()&&!val.get_Small()) {
                     paletten[i].setBorder(BorderFactory.createLineBorder(Color.green));
                 } else {
                     paletten[i].setBorder(BorderFactory.createLineBorder(Color.red));
