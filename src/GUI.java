@@ -65,7 +65,13 @@ public class GUI extends JFrame {
                 }
                 this.auftrage[first_empty].setBorder(BorderFactory.createLineBorder(color_border));
                 this.auftrage[first_empty].addActionListener(this::button_auftrag_click);
-                this.auftrage_label[first_empty].setText("<html><font color='white'>"+news[first_empty].getReward()+"€</font></html>");
+                String einlag;
+                if (news[first_empty].get_einlag()){
+                    einlag = "Einlagerung";
+                }else {
+                    einlag = "Auslagerung";
+                }
+                this.auftrage_label[first_empty].setText("<html><font color='white'>"+einlag+": "+news[first_empty].getReward()+"€</font></html>");
                 this.auftrag_menu.repaint();
             }
 
@@ -103,7 +109,7 @@ public class GUI extends JFrame {
             this.auftrage[i].setContentAreaFilled(false);
             this.auftrage[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
             this.auftrage_label[i] = new JLabel("<html><font color='white'>---</font></html>",SwingConstants.CENTER);
-            this.auftrage_label[i].setBounds(x,y+175,190,10);
+            this.auftrage_label[i].setBounds(x,y+175,190,15);
             this.auftrage_label[i].setOpaque(false);
             auftrag_menu.add(this.auftrage_label[i]);
             auftrag_menu.add(this.auftrage[i]);
@@ -166,13 +172,15 @@ public class GUI extends JFrame {
         this.add(auftrag_menu);
         this.add(main);
         this.add(bilanz_label);
-
+        ImageIcon img = new ImageIcon(getClass().getResource("main_icon.png"));
+        this.setIconImage(img.getImage());
         this.pack();
         this.setSize(full_frame);
         this.setResizable(false);
         this.setLayout(null);
         this.setDefaultCloseOperation(3);
         this.setVisible(true);
+
     }
     protected ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = getClass().getResource(path);
