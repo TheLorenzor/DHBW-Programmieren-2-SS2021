@@ -56,7 +56,7 @@ public class auftrag {
                 type = produkttyp.Stein;
             }
             switch (data[3]) {
-                case "Grün" -> eig = produkttyp.Gruen;
+                case "Grün", "Gr�n" -> eig = produkttyp.Gruen;
                 case "Blau" -> eig = produkttyp.Blau;
                 case "Kiefer" -> eig = produkttyp.Kiefer;
                 case "Buche" -> eig = produkttyp.Buche;

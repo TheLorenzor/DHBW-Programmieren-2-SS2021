@@ -168,7 +168,6 @@ public class regal extends JPanel {
         }
         update_lager();
     }
-    //TODO: anzeigen in GUI wie viel Euro gewinn
     public void update_lager() { //updates the regal to match the look
         if (this.mode<1) { //if it does not need to indicate where it is beeing pulled / pushed to this is used
             for (int i =0;i<10;i++) {
