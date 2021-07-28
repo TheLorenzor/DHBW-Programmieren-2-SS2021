@@ -103,6 +103,7 @@ public class regal extends JPanel {
                                 }
                             };
                             t.run();
+                            this.update_lager();
                         }
                     }
                     mode=0;

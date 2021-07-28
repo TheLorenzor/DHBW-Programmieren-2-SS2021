@@ -65,7 +65,6 @@ public class Bilanz extends JFrame {
         this.setIconImage(bilanz_icon.getImage());
     }
     private class mymodel extends AbstractTableModel {
-        Vector<String> columns ;
         Vector<Vector<String>> data;
         private final String[] column_names = {"Umsätze","Beschreibung","Details"};
         public mymodel(){
