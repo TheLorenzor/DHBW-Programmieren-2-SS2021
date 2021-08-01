@@ -47,7 +47,7 @@ public class Lager {
             System.err.println("Movement außerhalb des Lagers");
             return -1;
         }
-        return 0;
+        return 1;
     }
 
     public boolean einlagern(short[] punkt,produkt typ){
